@@ -30,7 +30,7 @@ class FixtureCardItem extends GroupedFixtureItem {
   const FixtureCardItem(this.fixture);
 }
 
-class GroupedFixturesList extends StatelessWidget {
+class GroupedFixturesList extends StatefulWidget {
   final List<SoccerFixture> fixtures;
   final bool showLeagueLogo;
 
@@ -41,20 +41,130 @@ class GroupedFixturesList extends StatelessWidget {
   });
 
   @override
+  State<GroupedFixturesList> createState() => _GroupedFixturesListState();
+}
+
+class _GroupedFixturesListState extends State<GroupedFixturesList> {
+  late final ScrollController _scrollController;
+  List<GroupedFixtureItem> _groupedItems = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToTarget();
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollToTarget() {
+    if (!_scrollController.hasClients || _groupedItems.isEmpty) return;
+
+    int targetCardIndex = -1;
+
+    // 1. Search for live fixture
+    for (int i = 0; i < _groupedItems.length; i++) {
+      final item = _groupedItems[i];
+      if (item is FixtureCardItem && item.fixture.status.isLive) {
+        targetCardIndex = i;
+        break;
+      }
+    }
+
+    // 2. Search for today's matches
+    if (targetCardIndex == -1) {
+      final now = DateTime.now();
+      for (int i = 0; i < _groupedItems.length; i++) {
+        final item = _groupedItems[i];
+        if (item is FixtureCardItem) {
+          final startTime = item.fixture.startTime;
+          if (startTime != null) {
+            final local = startTime.toLocal();
+            if (local.year == now.year &&
+                local.month == now.month &&
+                local.day == now.day) {
+              targetCardIndex = i;
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    // 3. Search for future matches (today or future)
+    if (targetCardIndex == -1) {
+      final now = DateTime.now();
+      final todayStart = DateTime(now.year, now.month, now.day);
+      for (int i = 0; i < _groupedItems.length; i++) {
+        final item = _groupedItems[i];
+        if (item is FixtureCardItem) {
+          final startTime = item.fixture.startTime;
+          if (startTime != null) {
+            final local = startTime.toLocal();
+            if (local.isAfter(todayStart)) {
+              targetCardIndex = i;
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    if (targetCardIndex == -1) return;
+
+    // Scroll to the header preceding this card
+    int targetIndex = 0;
+    for (int i = targetCardIndex; i >= 0; i--) {
+      if (_groupedItems[i] is FixtureHeaderItem) {
+        targetIndex = i;
+        break;
+      }
+    }
+
+    // Calculate scroll offset based on estimated item heights
+    double offset = 0.0;
+    for (int i = 0; i < targetIndex; i++) {
+      final item = _groupedItems[i];
+      if (item is FixtureHeaderItem) {
+        offset += 44.0; // Header height
+      } else if (item is FixtureCardItem) {
+        offset += 192.0; // Card height + top margin
+      }
+    }
+
+    // Smooth scroll to the offset
+    _scrollController.animateTo(
+      offset,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeInOutCubic,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    if (fixtures.isEmpty) {
+    if (widget.fixtures.isEmpty) {
       return const SizedBox.shrink();
     }
 
     // Determine if we should group by League or Date
     // If all fixtures have the same league, group by Date.
     // If there are multiple leagues, group by League.
-    final firstLeagueId = fixtures.first.fixtureLeague.id;
-    final allSameLeague = fixtures.every(
+    final firstLeagueId = widget.fixtures.first.fixtureLeague.id;
+    final allSameLeague = widget.fixtures.every(
       (f) => f.fixtureLeague.id == firstLeagueId,
     );
 
     if (allSameLeague) {
+      _groupedItems = _buildGroupedFixturesByDate(
+        widget.fixtures,
+        localeName: context.localeName,
+      );
       return _buildDateGroupedList(context);
     } else {
       return _buildLeagueGroupedList(context);
@@ -62,17 +172,13 @@ class GroupedFixturesList extends StatelessWidget {
   }
 
   Widget _buildDateGroupedList(BuildContext context) {
-    final groupedItems = _buildGroupedFixturesByDate(
-      fixtures,
-      localeName: context.localeName,
-    );
-
     return ListView.builder(
+      controller: _scrollController,
       padding: const EdgeInsets.only(bottom: 120),
-      itemCount: groupedItems.length,
+      itemCount: _groupedItems.length,
       itemBuilder: (context, index) {
-        final item = groupedItems[index];
-        final widget = switch (item) {
+        final item = _groupedItems[index];
+        final widgetItem = switch (item) {
           FixtureHeaderItem(date: final date) => Padding(
             padding: const EdgeInsets.symmetric(
               vertical: AppSpacing.m,
@@ -94,14 +200,14 @@ class GroupedFixturesList extends StatelessWidget {
 
         return FadeSlideIn(
           delay: Duration(milliseconds: 30 * index.clamp(0, 15)),
-          child: widget,
+          child: widgetItem,
         );
       },
     );
   }
 
   Widget _buildLeagueGroupedList(BuildContext context) {
-    final groups = _buildGroupedFixturesByLeague(fixtures);
+    final groups = _buildGroupedFixturesByLeague(widget.fixtures);
 
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
@@ -162,7 +268,7 @@ class GroupedFixturesList extends StatelessWidget {
       child: FixtureCard(
         soccerFixture: fixture,
         fixtureTime: formattedTime,
-        showLeagueLogo: showLeagueLogo,
+        showLeagueLogo: widget.showLeagueLogo,
       ),
     );
   }
