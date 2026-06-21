@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../../config/app_route.dart';
@@ -39,7 +38,7 @@ class ViewDayFixtures extends StatelessWidget {
           spacing: AppSpacing.s,
           children: [
             Icon(
-              PhosphorIcons.calendarBlank(PhosphorIconsStyle.fill),
+              Icons.calendar_today_rounded,
               color: context.colors.primary,
             ),
             Expanded(
@@ -158,7 +157,7 @@ class _ViewLiveFixturesState extends State<ViewLiveFixtures> {
               spacing: AppSpacing.s,
               children: [
                 Icon(
-                      PhosphorIcons.monitorPlay(PhosphorIconsStyle.fill),
+                      Icons.play_circle_filled_rounded,
                       color: context.colorsExt.red,
                     )
                     .animate(
@@ -174,12 +173,12 @@ class _ViewLiveFixturesState extends State<ViewLiveFixtures> {
                   ),
                 ),
                 _RailArrow(
-                  icon: PhosphorIcons.caretLeft(PhosphorIconsStyle.bold),
+                  icon: Icons.chevron_left_rounded,
                   enabled: _canScrollLeft,
                   onTap: () => _scrollBy(-scrollAmount),
                 ),
                 _RailArrow(
-                  icon: PhosphorIcons.caretRight(PhosphorIconsStyle.bold),
+                  icon: Icons.chevron_right_rounded,
                   enabled: _canScrollRight,
                   onTap: () => _scrollBy(scrollAmount),
                 ),

@@ -7,7 +7,6 @@ import 'theme_mode_bottom_sheet.dart';
 
 import '../../../../core/constants/app_spacing.dart';
 import 'package:live_score/src/core/extensions/context_ext.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class SettingsThemeTile extends StatelessWidget {
   const SettingsThemeTile({super.key});
@@ -41,7 +40,7 @@ class SettingsThemeTile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
-                    PhosphorIcons.palette(PhosphorIconsStyle.regular),
+                    Icons.palette_outlined,
                     size: 24,
                     color: context.colors.primary,
                   ),
@@ -68,7 +67,7 @@ class SettingsThemeTile extends StatelessWidget {
                   ),
                 ),
                 Icon(
-                  PhosphorIcons.caretRight(PhosphorIconsStyle.bold),
+                  Icons.chevron_right_rounded,
                   size: 18,
                   color: context.colorsExt.textMuted.withValues(alpha: 0.5),
                 ),

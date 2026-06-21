@@ -8,7 +8,6 @@ import 'language_mode_bottom_sheet.dart';
 
 import '../../../../core/constants/app_spacing.dart';
 import 'package:live_score/src/core/extensions/context_ext.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class SettingsLanguageTile extends StatelessWidget {
   const SettingsLanguageTile({super.key});
@@ -42,7 +41,7 @@ class SettingsLanguageTile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(
-                    PhosphorIcons.translate(PhosphorIconsStyle.regular),
+                    Icons.translate_rounded,
                     size: 24,
                     color: context.colors.primary,
                   ),
@@ -69,7 +68,7 @@ class SettingsLanguageTile extends StatelessWidget {
                   ),
                 ),
                 Icon(
-                  PhosphorIcons.caretRight(PhosphorIconsStyle.bold),
+                  Icons.chevron_right_rounded,
                   size: 18,
                   color: context.colorsExt.textMuted.withValues(alpha: 0.5),
                 ),

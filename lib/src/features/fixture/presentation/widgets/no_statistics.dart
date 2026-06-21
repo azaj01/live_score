@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-
 import '../../../../core/extensions/context_ext.dart';
 import '../../../../core/l10n/app_l10n.dart';
 import '../../../../core/widgets/app_empty.dart';
@@ -15,7 +13,7 @@ class NoStatistics extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 32.0),
       child: AppEmptyWidget(
         message: context.l10n.noStats,
-        icon: PhosphorIcons.chartBar(PhosphorIconsStyle.regular),
+        icon: Icons.bar_chart_rounded,
         color: context.colorsExt.blueGrey,
       ),
     );

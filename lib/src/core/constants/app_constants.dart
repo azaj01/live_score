@@ -21,6 +21,7 @@ class AppConstants {
     73, // Liga Portugal
     57, // Eredivisie
     649, // Saudi Pro League
+    5930, // World Cup
   ];
 
   static const directApiBaseUrl = 'https://webws.365scores.com/web';

@@ -4,7 +4,6 @@ import 'package:live_score/src/core/constants/app_spacing.dart';
 import 'package:live_score/src/core/extensions/fixture.dart';
 import 'package:live_score/src/core/extensions/responsive_size.dart';
 import 'package:live_score/src/core/theme/app_fonts.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../../core/domain/entities/soccer_fixture.dart';
 import '../../../../core/extensions/context_ext.dart';
@@ -149,7 +148,7 @@ class LiveFixtureCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
-                  PhosphorIcons.clock(PhosphorIconsStyle.fill),
+                  Icons.access_time_filled_rounded,
                   size: 12,
                   color: context.colorsExt.white,
                 ),

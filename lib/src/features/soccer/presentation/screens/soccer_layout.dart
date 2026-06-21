@@ -6,7 +6,6 @@ import 'package:live_score/src/config/app_route.dart';
 import 'package:live_score/src/core/extensions/context_ext.dart';
 import 'package:live_score/src/core/extensions/responsive_size.dart';
 import 'package:live_score/src/core/layout/adaptive_layout.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../../core/l10n/app_l10n.dart';
 import '../../../../core/constants/app_assets.dart';
@@ -36,7 +35,7 @@ class SoccerLayout extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () => context.push(Routes.settings),
-            icon: Icon(PhosphorIcons.gear(PhosphorIconsStyle.regular)),
+            icon: const Icon(Icons.settings_outlined),
             tooltip: l10n.settings,
           ),
           const SizedBox(width: AppSpacing.s),
@@ -56,18 +55,18 @@ class SoccerLayout extends StatelessWidget {
                       : NavigationRailLabelType.all,
               destinations: [
                 NavigationRailDestination(
-                  icon: Icon(PhosphorIcons.house(PhosphorIconsStyle.regular)),
-                  selectedIcon: Icon(PhosphorIcons.house(PhosphorIconsStyle.fill)),
+                  icon: const Icon(Icons.home_outlined),
+                  selectedIcon: const Icon(Icons.home_rounded),
                   label: Text(l10n.home),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(PhosphorIcons.soccerBall(PhosphorIconsStyle.regular)),
-                  selectedIcon: Icon(PhosphorIcons.soccerBall(PhosphorIconsStyle.fill)),
+                  icon: const Icon(Icons.sports_soccer_outlined),
+                  selectedIcon: const Icon(Icons.sports_soccer),
                   label: Text(l10n.fixtures),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(PhosphorIcons.chartBar(PhosphorIconsStyle.regular)),
-                  selectedIcon: Icon(PhosphorIcons.chartBar(PhosphorIconsStyle.fill)),
+                  icon: const Icon(Icons.bar_chart_rounded),
+                  selectedIcon: const Icon(Icons.bar_chart_rounded),
                   label: Text(l10n.standings),
                 ),
               ],
@@ -141,22 +140,22 @@ class _FloatingBottomNav extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   _NavItem(
-                    icon: PhosphorIcons.house(PhosphorIconsStyle.regular),
-                    activeIcon: PhosphorIcons.house(PhosphorIconsStyle.fill),
+                    icon: Icons.home_outlined,
+                    activeIcon: Icons.home_rounded,
                     label: l10n.home,
                     isSelected: currentIndex == 0,
                     onTap: () => onTap(0),
                   ),
                   _NavItem(
-                    icon: PhosphorIcons.soccerBall(PhosphorIconsStyle.regular),
-                    activeIcon: PhosphorIcons.soccerBall(PhosphorIconsStyle.fill),
+                    icon: Icons.sports_soccer_outlined,
+                    activeIcon: Icons.sports_soccer,
                     label: l10n.fixtures,
                     isSelected: currentIndex == 1,
                     onTap: () => onTap(1),
                   ),
                   _NavItem(
-                    icon: PhosphorIcons.chartBar(PhosphorIconsStyle.regular),
-                    activeIcon: PhosphorIcons.chartBar(PhosphorIconsStyle.fill),
+                    icon: Icons.bar_chart_rounded,
+                    activeIcon: Icons.bar_chart_rounded,
                     label: l10n.standings,
                     isSelected: currentIndex == 2,
                     onTap: () => onTap(2),

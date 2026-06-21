@@ -8,7 +8,6 @@ import 'package:live_score/src/core/constants/app_spacing.dart';
 
 import 'dart:ui';
 import 'package:live_score/src/core/extensions/context_ext.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class LanguageModeBottomSheet extends StatelessWidget {
   const LanguageModeBottomSheet({super.key, required this.currentLanguage});
@@ -69,19 +68,19 @@ class LanguageModeBottomSheet extends StatelessWidget {
             const SizedBox(height: AppSpacing.xl),
             _LanguageOption(
               title: l10n.languageLabel(AppLanguage.system),
-              icon: PhosphorIcons.gear(PhosphorIconsStyle.regular),
+              icon: Icons.settings_outlined,
               language: AppLanguage.system,
               isSelected: currentLanguage == AppLanguage.system,
             ),
             _LanguageOption(
               title: l10n.languageLabel(AppLanguage.english),
-              icon: PhosphorIcons.globe(PhosphorIconsStyle.regular),
+              icon: Icons.language_rounded,
               language: AppLanguage.english,
               isSelected: currentLanguage == AppLanguage.english,
             ),
             _LanguageOption(
               title: l10n.languageLabel(AppLanguage.arabic),
-              icon: PhosphorIcons.translate(PhosphorIconsStyle.regular),
+              icon: Icons.translate_rounded,
               language: AppLanguage.arabic,
               isSelected: currentLanguage == AppLanguage.arabic,
             ),
@@ -144,7 +143,7 @@ class _LanguageOption extends StatelessWidget {
               ),
               if (isSelected)
                 Icon(
-                  PhosphorIcons.checkCircle(PhosphorIconsStyle.fill),
+                  Icons.check_circle_rounded,
                   color: context.colors.primary,
                   size: 20,
                 ),

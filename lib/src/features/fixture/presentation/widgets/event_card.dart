@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:live_score/src/core/extensions/responsive_size.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../../core/constants/app_decorations.dart';
 import '../../../../core/constants/app_spacing.dart';
@@ -160,7 +159,7 @@ class _EventIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     if (event.type.id.isGoalOrOwnGoal) {
       return Icon(
-            PhosphorIcons.soccerBall(PhosphorIconsStyle.fill),
+            Icons.sports_soccer,
             size: 16,
             color: Theme.of(context).colorScheme.onSurface,
           )
@@ -193,13 +192,13 @@ class _EventIcon extends StatelessWidget {
       );
     } else if (event.type.id.isSubstitute) {
       return Icon(
-        PhosphorIcons.arrowsLeftRight(PhosphorIconsStyle.bold),
+        Icons.swap_horiz_rounded,
         size: 16,
         color: context.colorsExt.blue,
       );
     }
     return Icon(
-      PhosphorIcons.info(PhosphorIconsStyle.regular),
+      Icons.info_outline_rounded,
       size: 16,
       color: context.colorsExt.textSubtle,
     );
@@ -249,12 +248,12 @@ class _PenaltyMissedIcon extends StatelessWidget {
       alignment: AlignmentDirectional.center,
       children: [
         Icon(
-          PhosphorIcons.soccerBall(PhosphorIconsStyle.fill),
+          Icons.sports_soccer,
           size: 18,
           color: context.colorsExt.textMuted,
         ),
         Icon(
-          PhosphorIcons.x(PhosphorIconsStyle.bold),
+          Icons.close_rounded,
           size: 14,
           color: context.colorsExt.red,
         ),
@@ -292,7 +291,7 @@ class _EventSubstitute extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              PhosphorIcons.arrowUp(PhosphorIconsStyle.bold),
+              Icons.arrow_upward_rounded,
               size: 12,
               color: context.colorsExt.green,
             ),
@@ -315,7 +314,7 @@ class _EventSubstitute extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
-              PhosphorIcons.arrowDown(PhosphorIconsStyle.bold),
+              Icons.arrow_downward_rounded,
               size: 12,
               color: context.colorsExt.red,
             ),

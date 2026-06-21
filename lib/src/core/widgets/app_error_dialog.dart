@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-
 import '../l10n/app_l10n.dart';
 import '../extensions/context_ext.dart';
 import '../constants/app_spacing.dart';
@@ -65,7 +63,7 @@ class AppErrorDialog extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
-                    PhosphorIcons.warningCircle(PhosphorIconsStyle.fill), 
+                    Icons.error_rounded, 
                     color: context.colorsExt.red, 
                     size: 48
                   ),

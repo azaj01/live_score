@@ -7,7 +7,6 @@ import 'package:live_score/src/core/constants/app_spacing.dart';
 
 import 'dart:ui';
 import 'package:live_score/src/core/extensions/context_ext.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class ThemeModeBottomSheet extends StatelessWidget {
   const ThemeModeBottomSheet({super.key, required this.currentThemeMode});
@@ -68,19 +67,19 @@ class ThemeModeBottomSheet extends StatelessWidget {
             const SizedBox(height: AppSpacing.xl),
             _ThemeOption(
               title: l10n.themeModeLabel(ThemeMode.system),
-              icon: PhosphorIcons.deviceMobile(PhosphorIconsStyle.regular),
+              icon: Icons.phone_android_rounded,
               mode: ThemeMode.system,
               isSelected: currentThemeMode == ThemeMode.system,
             ),
             _ThemeOption(
               title: l10n.themeModeLabel(ThemeMode.light),
-              icon: PhosphorIcons.sun(PhosphorIconsStyle.regular),
+              icon: Icons.light_mode_outlined,
               mode: ThemeMode.light,
               isSelected: currentThemeMode == ThemeMode.light,
             ),
             _ThemeOption(
               title: l10n.themeModeLabel(ThemeMode.dark),
-              icon: PhosphorIcons.moon(PhosphorIconsStyle.regular),
+              icon: Icons.dark_mode_outlined,
               mode: ThemeMode.dark,
               isSelected: currentThemeMode == ThemeMode.dark,
             ),
@@ -143,7 +142,7 @@ class _ThemeOption extends StatelessWidget {
               ),
               if (isSelected)
                 Icon(
-                  PhosphorIcons.checkCircle(PhosphorIconsStyle.fill),
+                  Icons.check_circle_rounded,
                   color: context.colors.primary,
                   size: 20,
                 ),

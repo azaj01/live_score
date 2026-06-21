@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:live_score/src/core/extensions/context_ext.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../../core/l10n/app_l10n.dart';
 
@@ -31,7 +30,7 @@ class ViewAllTile extends StatelessWidget {
               ),
             ),
             Icon(
-              PhosphorIcons.caretRight(PhosphorIconsStyle.bold),
+              Icons.chevron_right_rounded,
               size: 14,
               color: context.colors.primary,
             ),

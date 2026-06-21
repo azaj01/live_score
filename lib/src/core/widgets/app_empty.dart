@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-
 import '../l10n/app_l10n.dart';
 import '../constants/app_spacing.dart';
 import '../constants/app_decorations.dart';
@@ -49,7 +47,7 @@ class AppEmptyWidget extends StatelessWidget {
               color: themeColor.withValues(alpha: 0.1),
             ),
             child: image ?? Icon(
-              icon ?? PhosphorIcons.soccerBall(PhosphorIconsStyle.regular),
+              icon ?? Icons.sports_soccer_outlined,
               size: 64,
               color: themeColor,
             ),
@@ -69,7 +67,7 @@ class AppEmptyWidget extends StatelessWidget {
             const SizedBox(height: AppSpacing.xl),
             FilledButton.icon(
               onPressed: onRetry,
-              icon: Icon(PhosphorIcons.arrowsClockwise(PhosphorIconsStyle.bold), size: 18),
+              icon: const Icon(Icons.refresh_rounded, size: 18),
               label: Text(retryLabel ?? context.l10n.reload),
               style: FilledButton.styleFrom(
                 backgroundColor: context.colors.primary,
