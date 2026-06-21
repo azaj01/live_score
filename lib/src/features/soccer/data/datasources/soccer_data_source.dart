@@ -78,7 +78,7 @@ class SoccerDataSourceImpl implements SoccerDataSource {
   @override
   Future<List<SoccerFixtureModel>> getTodayFixtures() async {
     try {
-      final today = DateFormat('yyyy-MM-dd').format(DateTime.now().toLocal());
+      final today = DateFormat('dd/MM/yyyy').format(DateTime.now().toLocal());
       final response = await dioHelper.get(
         url: Endpoints.todayFixtures,
         queryParams: {
