@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 
 import '../../../domain/entities/statistics.dart';
@@ -11,7 +12,7 @@ class StatisticsCubit extends Cubit<StatisticsState> {
   final StatisticsUseCase statisticsUseCase;
 
   StatisticsCubit({required this.statisticsUseCase})
-      : super(StatisticsInitial());
+      : super(const StatisticsInitial());
 
   bool _isLoading = false;
 

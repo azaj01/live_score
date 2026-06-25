@@ -9,7 +9,7 @@ import 'leagues_state.dart';
 class LeaguesCubit extends Cubit<LeaguesState> {
   final LeaguesUseCase leaguesUseCase;
 
-  LeaguesCubit({required this.leaguesUseCase}) : super(LeaguesInitial());
+  LeaguesCubit({required this.leaguesUseCase}) : super(const LeaguesInitial());
 
   List<League> _availableLeagues = [];
   List<League> get availableLeagues => _availableLeagues;
@@ -28,7 +28,7 @@ class LeaguesCubit extends Cubit<LeaguesState> {
       if (forceRefresh) {
         _availableLeagues = [];
       }
-      emit(LeaguesLoading());
+      emit(const LeaguesLoading());
       final leagues = await leaguesUseCase(NoParams());
       leagues.fold((left) => emit(LeaguesLoadFailure(left.message)), (right) {
         _availableLeagues = right;

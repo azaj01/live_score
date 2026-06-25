@@ -1,52 +1,39 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../core/error/error_handler.dart';
+import '../../../../core/utils/safe_local_call.dart';
 import '../../domain/app_language.dart';
 import '../../domain/repositories/settings_repository.dart';
+import '../datasources/settings_local_data_source.dart';
 
 class SettingsRepositoryImpl implements SettingsRepository {
-  static const _themeModeKey = 'theme_mode';
-  static const _appLanguageKey = 'app_language';
+  final SettingsLocalDataSource localDataSource;
+
+  SettingsRepositoryImpl({required this.localDataSource});
 
   @override
-  Future<ThemeMode> getThemeMode() async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    final String? storedThemeMode = preferences.getString(_themeModeKey);
-
-    return switch (storedThemeMode) {
-      'dark' => ThemeMode.dark,
-      'light' => ThemeMode.light,
-      _ => ThemeMode.system,
-    };
+  Future<Either<Failure, ThemeMode>> getThemeMode() {
+    return safeLocalCall(() => localDataSource.getThemeMode());
   }
 
   @override
-  Future<void> setThemeMode(ThemeMode themeMode) async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    final String value = switch (themeMode) {
-      ThemeMode.dark => 'dark',
-      ThemeMode.light => 'light',
-      ThemeMode.system => 'system',
-    };
-    await preferences.setString(_themeModeKey, value);
+  Future<Either<Failure, void>> setThemeMode(ThemeMode themeMode) {
+    return safeLocalCall(() => localDataSource.setThemeMode(themeMode));
   }
 
   @override
-  Future<AppLanguage> getAppLanguage() async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    return AppLanguage.fromStorage(preferences.getString(_appLanguageKey));
+  Future<Either<Failure, AppLanguage>> getAppLanguage() {
+    return safeLocalCall(() => localDataSource.getAppLanguage());
   }
 
   @override
-  Future<void> setAppLanguage(AppLanguage language) async {
-    final SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.setString(_appLanguageKey, language.storageValue);
+  Future<Either<Failure, void>> setAppLanguage(AppLanguage language) {
+    return safeLocalCall(() => localDataSource.setAppLanguage(language));
   }
 
   @override
-  Future<String> getAppVersion() async {
-    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    return '${packageInfo.version}+${packageInfo.buildNumber}';
+  Future<Either<Failure, String>> getAppVersion() {
+    return safeLocalCall(() => localDataSource.getAppVersion());
   }
 }

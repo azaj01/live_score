@@ -1,21 +1,26 @@
-import 'dart:ui' as ui;
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-import '../../container_injector.dart';
-import '../../features/settings/presentation/cubit/settings_cubit.dart';
 import '../constants/app_constants.dart';
+import '../utils/date_time_provider.dart';
+import 'api_client.dart';
+import 'locale_provider.dart';
 
 const String _contentType = 'Content-Type';
 const String _applicationJson = 'application/json';
 const int _timeOut = 20000;
 
-/// Represents the dio helper entity/model.
-class DioHelper {
+/// Concrete implementation of [ApiClient] using [Dio].
+class DioHelper implements ApiClient {
   final Dio dio;
+  final LocaleProvider localeProvider;
+  final DateTimeProvider dateTimeProvider;
 
-  DioHelper({required this.dio}) {
+  DioHelper({
+    required this.dio,
+    required this.localeProvider,
+    required this.dateTimeProvider,
+  }) {
     final Map<String, dynamic> headers = {_contentType: _applicationJson};
     dio.options = BaseOptions(
       baseUrl: AppConstants.apiBaseUrl,
@@ -31,7 +36,7 @@ class DioHelper {
   }
 
   String _getTimezoneName() {
-    final offsetHours = DateTime.now().timeZoneOffset.inMinutes / 60.0;
+    final offsetHours = dateTimeProvider.now().timeZoneOffset.inMinutes / 60.0;
     final timezoneMap = {
       -11.0: 'Pacific/Midway',
       -10.0: 'Pacific/Honolulu',
@@ -63,17 +68,17 @@ class DioHelper {
       11.0: 'Pacific/Guadalcanal',
       12.0: 'Pacific/Auckland',
       13.0: 'Pacific/Apia',
+      14.0: 'Pacific/Kiritimati', // Added standard +14 hours for completeness
     };
     return timezoneMap[offsetHours] ?? 'UTC';
   }
 
-  Future<Response> get({
+  @override
+  Future<Response<T>> get<T>({
     required String url,
     Map<String, dynamic>? queryParams,
   }) async {
-    final locale = sl<SettingsCubit>().state.language.resolveLocale(
-      ui.PlatformDispatcher.instance.locale,
-    );
+    final locale = localeProvider.getLocale();
     final mergedQueryParameters = <String, dynamic>{
       'langId':
           locale.languageCode == 'ar'
@@ -83,6 +88,6 @@ class DioHelper {
       'timezoneName': _getTimezoneName(),
       ...?queryParams,
     };
-    return await dio.get(url, queryParameters: mergedQueryParameters);
+    return await dio.get<T>(url, queryParameters: mergedQueryParameters);
   }
 }

@@ -1,5 +1,5 @@
 import '../../container_injector.dart';
-import '../../core/api/dio_helper.dart';
+import '../../core/api/api_client.dart';
 import '../../core/network/network_info.dart';
 import 'data/data_sources/fixture_data_source.dart';
 import 'data/repositories/fixture_repository_impl.dart';
@@ -11,7 +11,7 @@ import 'presentation/cubit/statistics/statistics_cubit.dart';
 
 void initFixture() {
   sl.registerLazySingleton<FixtureDataSource>(
-    () => FixtureDataSourceImpl(dioHelper: sl<DioHelper>()),
+    () => FixtureDataSourceImpl(apiClient: sl<ApiClient>()),
   );
   sl.registerLazySingleton<FixtureRepository>(
     () => FixtureRepositoryImpl(

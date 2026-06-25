@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:live_score/src/core/constants/app_spacing.dart';
 
 import '../../../../core/extensions/context_ext.dart';
-import '../../../fixture/domain/enums.dart';
+import '../../../../core/domain/enums/soccer_fixture_status.dart';
 
 /// A colored badge showing the fixture status (live, scheduled, ended).
 class FixtureStatusBadge extends StatelessWidget {

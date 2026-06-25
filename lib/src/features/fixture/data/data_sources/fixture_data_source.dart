@@ -1,6 +1,6 @@
 import 'package:live_score/src/features/fixture/data/models/fixture_details_model.dart';
 
-import '../../../../core/api/dio_helper.dart';
+import '../../../../core/api/api_client.dart';
 import '../../../../core/api/endpoints.dart';
 import '../models/statistics_model.dart';
 
@@ -11,14 +11,14 @@ abstract class FixtureDataSource {
 }
 
 class FixtureDataSourceImpl implements FixtureDataSource {
-  final DioHelper dioHelper;
+  final ApiClient apiClient;
 
-  FixtureDataSourceImpl({required this.dioHelper});
+  FixtureDataSourceImpl({required this.apiClient});
 
   @override
   Future<FixtureDetailsModel> getFixtureDetails(int fixtureId) async {
     try {
-      final response = await dioHelper.get(
+      final response = await apiClient.get(
         url: Endpoints.fixtureDetails,
         queryParams: {'gameId': fixtureId},
       );
@@ -32,7 +32,7 @@ class FixtureDataSourceImpl implements FixtureDataSource {
   @override
   Future<StatisticsModel> getStatistics(int fixtureId) async {
     try {
-      final response = await dioHelper.get(
+      final response = await apiClient.get(
         url: Endpoints.matchStatistics,
         queryParams: {'games': fixtureId},
       );
