@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:live_score/src/features/fixture/domain/entities/fixture_details.dart';
 
@@ -12,7 +13,7 @@ class FixtureCubit extends Cubit<FixtureState> {
   final FixtureDetailsUseCase fixtureDetailsUseCase;
 
   FixtureCubit({required this.fixtureDetailsUseCase})
-      : super(FixtureInitial());
+      : super(const FixtureInitial());
 
   bool _isLoading = false;
 

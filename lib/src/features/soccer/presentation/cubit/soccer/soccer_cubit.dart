@@ -16,7 +16,7 @@ class SoccerCubit extends Cubit<SoccerState> {
     required this.currentRoundFixturesUseCase,
     required this.todayFixturesUseCase,
     required this.standingUseCase,
-  }) : super(SoccerInitial());
+  }) : super(const SoccerInitial());
 
   bool _isLoadingTodayFixtures = false;
   bool _isLoadingCurrentRoundFixtures = false;
@@ -28,7 +28,7 @@ class SoccerCubit extends Cubit<SoccerState> {
 
     _isLoadingCurrentRoundFixtures = true;
     try {
-      emit(SoccerCurrentRoundFixturesLoading());
+      emit(const SoccerCurrentRoundFixturesLoading());
       final fixtures = await currentRoundFixturesUseCase(competitionId);
       fixtures.fold(
         (left) => emit(
@@ -74,7 +74,7 @@ class SoccerCubit extends Cubit<SoccerState> {
 
     _isLoadingStandings = true;
     try {
-      emit(SoccerStandingsLoading());
+      emit(const SoccerStandingsLoading());
       final standings = await standingUseCase(params);
       standings.fold(
         (left) => emit(SoccerStandingsLoadFailure(left.message)),
