@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:live_score/src/core/domain/entities/league.dart';
 
-import '../../../features/fixture/domain/enums.dart';
+import '../enums/soccer_fixture_status.dart';
 import 'teams.dart';
 
 /// Represents the soccer fixture entity/model.
