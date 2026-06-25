@@ -57,9 +57,6 @@ Future<void> initCore() async {
     ),
   );
 
-  // Temporary backward-compatibility registration
-  sl.registerLazySingleton<DioHelper>(() => sl<ApiClient>() as DioHelper);
-
   if (!kIsWeb) {
     sl.registerLazySingleton<InternetConnectionChecker>(
       () => InternetConnectionChecker.createInstance(

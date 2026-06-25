@@ -3,11 +3,12 @@ import 'package:intl/intl.dart';
 import 'package:live_score/src/core/constants/app_constants.dart';
 import 'package:live_score/src/core/models/country_model.dart';
 
-import '../../../../core/api/dio_helper.dart';
+import '../../../../core/api/api_client.dart';
 import '../../../../core/api/endpoints.dart';
 import '../../../../core/domain/entities/league.dart';
 import '../../../../core/models/league_model.dart';
 import '../../../../core/models/soccer_fixture_model.dart';
+import '../../../../core/utils/date_time_provider.dart';
 import '../../domain/use_cases/standings_usecase.dart';
 import '../models/standings_model.dart';
 
@@ -24,18 +25,22 @@ abstract class SoccerDataSource {
 }
 
 class SoccerDataSourceImpl implements SoccerDataSource {
-  final DioHelper dioHelper;
+  final ApiClient apiClient;
+  final DateTimeProvider dateTimeProvider;
   static final Set<int> _availableLeagueIds =
       AppConstants.availableLeagues.toSet();
 
-  SoccerDataSourceImpl({required this.dioHelper});
+  SoccerDataSourceImpl({
+    required this.apiClient,
+    required this.dateTimeProvider,
+  });
 
   @override
   Future<List<SoccerFixtureModel>> getCurrentRoundFixtures({
     required int competitionId,
   }) async {
     try {
-      final response = await dioHelper.get(
+      final response = await apiClient.get(
         url: Endpoints.currentRoundFixtures,
         queryParams: {'competitions': competitionId},
       );
@@ -48,7 +53,7 @@ class SoccerDataSourceImpl implements SoccerDataSource {
   @override
   Future<List<LeagueModel>> getLeagues() async {
     try {
-      final response = await dioHelper.get(
+      final response = await apiClient.get(
         url: Endpoints.leagues,
         queryParams: {
           'competitions': AppConstants.availableLeagues.join(','),
@@ -78,8 +83,8 @@ class SoccerDataSourceImpl implements SoccerDataSource {
   @override
   Future<List<SoccerFixtureModel>> getTodayFixtures() async {
     try {
-      final today = DateFormat('dd/MM/yyyy').format(DateTime.now().toLocal());
-      final response = await dioHelper.get(
+      final today = DateFormat('dd/MM/yyyy').format(dateTimeProvider.now().toLocal());
+      final response = await apiClient.get(
         url: Endpoints.todayFixtures,
         queryParams: {
           'sports': 1,
@@ -101,7 +106,7 @@ class SoccerDataSourceImpl implements SoccerDataSource {
   @override
   Future<StandingsModel> getStandings({required StandingsParams params}) async {
     try {
-      final response = await dioHelper.get(
+      final response = await apiClient.get(
         url: Endpoints.standings,
         queryParams: params.toJson(),
       );
