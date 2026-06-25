@@ -7,7 +7,7 @@ import 'src/my_app.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initApp();
+  await initApp();
   await sl<SettingsCubit>().loadSettings();
   Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
